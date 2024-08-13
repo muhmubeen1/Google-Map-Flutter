@@ -28,6 +28,11 @@ class _HomePageState extends State<HomePage> {
       position: LatLng(37.56, -122.0753),
       infoWindow: InfoWindow(title: "Second Location"),
     ),
+    Marker(
+      markerId: MarkerId("3"),
+      position: LatLng(56.910, 23.567),
+      infoWindow: InfoWindow(title: "Random Location"),
+    ),
   ];
   @override
   void initState() {
@@ -42,17 +47,26 @@ class _HomePageState extends State<HomePage> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: SafeArea(
-            child: GoogleMap(
-          initialCameraPosition: _kGooglePlex,
-          mapType: MapType.normal,
-          myLocationButtonEnabled: true,
-          myLocationEnabled: true,
-          compassEnabled: true,
-          markers: Set<Marker>.of(_marker),
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-        )),
+          child: GoogleMap(
+            initialCameraPosition: _kGooglePlex,
+            mapType: MapType.normal,
+            myLocationButtonEnabled: true,
+            myLocationEnabled: true,
+            compassEnabled: true,
+            markers: Set<Marker>.of(_marker),
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+            },
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.location_disabled_outlined),
+            onPressed: () async {
+              GoogleMapController controller = await _controller.future;
+              controller.animateCamera(CameraUpdate.newCameraPosition(
+                  CameraPosition(target: LatLng(56.910, 23.567))));
+              setState(() {});
+            }),
       ),
     );
   }
