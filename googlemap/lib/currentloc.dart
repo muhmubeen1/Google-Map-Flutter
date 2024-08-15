@@ -37,6 +37,25 @@ class _CurrentlocationState extends State<Currentlocation> {
   void initState() {
     // TODO: implement initState
     _list.addAll(_markers);
+    loadData();
+  }
+
+  loadData() {
+    getUserLocation().then((value) async {
+      print("Current Location");
+      print(value.latitude.toString() + "" + value.longitude.toString());
+      _markers.add(Marker(
+          markerId: MarkerId("2"),
+          position: LatLng(value.latitude, value.longitude)));
+      CameraPosition _cameraPosition = CameraPosition(
+        target: LatLng(value.latitude, value.longitude),
+        zoom: 14,
+      );
+
+      final GoogleMapController controller = await _controller.future;
+      controller.animateCamera(CameraUpdate.newCameraPosition(_cameraPosition));
+      setState(() {});
+    });
   }
 
   @override
@@ -54,25 +73,7 @@ class _CurrentlocationState extends State<Currentlocation> {
         )),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.location_disabled_outlined),
-          onPressed: () {
-            getUserLocation().then((value) async {
-              print("Current Location");
-              print(
-                  value.latitude.toString() + "" + value.longitude.toString());
-              _markers.add(Marker(
-                  markerId: MarkerId("2"),
-                  position: LatLng(value.latitude, value.longitude)));
-              CameraPosition _cameraPosition = CameraPosition(
-                target: LatLng(value.latitude, value.longitude),
-                zoom: 14,
-              );
-
-              final GoogleMapController controller = await _controller.future;
-              controller.animateCamera(
-                  CameraUpdate.newCameraPosition(_cameraPosition));
-              setState(() {});
-            });
-          },
+          onPressed: () {},
         ),
       ),
     );
