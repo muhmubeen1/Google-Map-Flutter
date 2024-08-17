@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:googlemap/keys.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 
@@ -14,7 +15,9 @@ class _GooglePlacesState extends State<GooglePlaces> {
   TextEditingController _controller = TextEditingController();
   var uuid = Uuid();
   String _sessionID = "12344";
+  // ignore: unused_field
   List<dynamic> _listPlaces = [];
+  Keys Api = Keys();
   @override
   void initState() {
     // TODO: implement initState
@@ -33,7 +36,7 @@ class _GooglePlacesState extends State<GooglePlaces> {
   }
 
   void getSuggestion(String input) async {
-    String k_places_API = "AIzaSyD_0gwKG5wD_ZciOuR30g7Ob_WGiFF2QBE";
+    String k_places_API = Keys.Api_Key;
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
     String request =
