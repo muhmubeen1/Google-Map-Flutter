@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_geocoder/geocoder.dart';
+// import 'package:geocoder2/geocoder2.dart';
+// import 'package:yandex_geocoder/yandex_geocoder.dart';
+import 'package:location_geocoder/location_geocoder.dart';
 
 class LatToAddress extends StatefulWidget {
   const LatToAddress({Key? key}) : super(key: key);
@@ -8,7 +10,7 @@ class LatToAddress extends StatefulWidget {
 }
 
 class _LatToAddressState extends State<LatToAddress> {
-  String stAddress = "";
+  String stAddress = " ";
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,27 +32,25 @@ class _LatToAddressState extends State<LatToAddress> {
               child: GestureDetector(
                 onTap: () async {
                   try {
-                    final coordinates = Coordinates(56.910, 23.567);
-                    var addresses = await Geocoder.local
-                        .findAddressesFromCoordinates(coordinates);
-                    var first = addresses.first;
-                    print(
-                        "Address: ${first.featureName} : ${first.addressLine}");
-                    setState(() {
-                      stAddress = first.addressLine.toString();
-                    });
+                    const _apiKey = 'AIzaSyD_0gwKG5wD_ZciOuR30g7Ob_WGiFF2QBE';
+                    final LocatitonGeocoder geocoder =
+                        LocatitonGeocoder(_apiKey);
+                    final address = await geocoder.findAddressesFromCoordinates(
+                        Coordinates(9.9312, 76.2673));
+                    print(address.first.addressLine);
                   } catch (e) {
                     print("Error occurred: $e");
                   }
-                  try {
-                    final query = "1600 Amphiteatre Parkway, Mountain View";
-                    var addresses =
-                        await Geocoder.local.findAddressesFromQuery(query);
-                    var second = addresses.first;
-                    print("${second.featureName} : ${second.coordinates}");
-                  } catch (e) {
-                    print("Error occurred: $e");
-                  }
+
+                  // try {
+                  //   final query = "1600 Amphiteatre Parkway, Mountain View";
+                  //   var addresses =
+                  //       await Geocoder.local.findAddressesFromQuery(query);
+                  //   var second = addresses.first;
+                  //   print("${second.featureName} : ${second.coordinates}");
+                  // } catch (e) {
+                  //   print("Error occurred: $e");
+                  // }
                 },
                 child: Container(
                   color: Colors.cyanAccent,
