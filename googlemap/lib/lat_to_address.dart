@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:googlemap/keys.dart';
 // import 'package:geocoder2/geocoder2.dart';
 // import 'package:yandex_geocoder/yandex_geocoder.dart';
 import 'package:location_geocoder/location_geocoder.dart';
@@ -11,6 +12,7 @@ class LatToAddress extends StatefulWidget {
 
 class _LatToAddressState extends State<LatToAddress> {
   String stAddress = " ";
+  Keys Api = Keys();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,7 +34,7 @@ class _LatToAddressState extends State<LatToAddress> {
               child: GestureDetector(
                 onTap: () async {
                   try {
-                    const _apiKey = 'AIzaSyD_0gwKG5wD_ZciOuR30g7Ob_WGiFF2QBE';
+                    String _apiKey = Keys.Api_Key;
                     final LocatitonGeocoder geocoder =
                         LocatitonGeocoder(_apiKey);
                     final address = await geocoder.findAddressesFromCoordinates(
