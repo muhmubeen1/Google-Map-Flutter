@@ -11,9 +11,12 @@ class _CustomInfoWindowState extends State<CustomInfoWindow> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          title: Text("Custom Info Window"),
+        ),
         body: SafeArea(
             child: Column(
-          children: [],
+          children: [Text("Custom Window info")],
         )),
       ),
     );
